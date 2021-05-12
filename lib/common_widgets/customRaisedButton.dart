@@ -14,11 +14,9 @@ class CustomRaisedButton extends StatelessWidget {
     // ignore: deprecated_member_use
     return SizedBox(
       height: 50,
+      width: double.infinity,
       child: RaisedButton(
-
-        child: Row(
-          children: [child],
-        ),
+        child: child,
         color: color,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
