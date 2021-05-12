@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:udemy_app/common_widgets/customRaisedButton.dart';
 import 'package:udemy_app/sign_in/SignInButton.dart';
@@ -82,7 +83,7 @@ class _SignInState extends State<SignIn> {
                       text: 'Go Anonymous',
                       color: Colors.grey[700],
                       textColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: _signInAnonymously,
                     ),
                   ],
                 ),
@@ -96,5 +97,15 @@ class _SignInState extends State<SignIn> {
 
   void _signInWithGoogle() {
     //TODO: Auth with Google Account
+  }
+
+  Future<void> _signInAnonymously() async {
+    //TODO: Auth Anonymously
+    try {
+      final userCredentials = await FirebaseAuth.instance.signInAnonymously();
+      print('${userCredentials.user.uid}');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
