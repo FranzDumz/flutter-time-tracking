@@ -1,14 +1,30 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:udemy_app/common_widgets/customRaisedButton.dart';
+
+import 'package:udemy_app/services/Auth.dart';
 import 'package:udemy_app/sign_in/SignInButton.dart';
 
-class SignIn extends StatefulWidget {
-  @override
-  _SignInState createState() => _SignInState();
-}
+class SignIn extends StatelessWidget {
+  const SignIn({Key key, @required this.auth}) : super(key: key);
+  final AuthBase auth;
 
-class _SignInState extends State<SignIn> {
+  Future<void> _signInAnonymously() async {
+    //TODO: Auth Anonymously
+    try {
+      await auth.signInAnonymously();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    //TODO: Auth with Google Account
+    try {
+      await auth.signInWithGoogle();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +69,7 @@ class _SignInState extends State<SignIn> {
                       text: 'Sign in with google',
                       color: Colors.white,
                       textColor: Colors.black,
-                      onPressed: () {},
+                      onPressed: _signInWithGoogle,
                     ),
                     SizedBox(height: 8.0),
                     SignInButton(
@@ -93,19 +109,5 @@ class _SignInState extends State<SignIn> {
         ),
       ),
     );
-  }
-
-  void _signInWithGoogle() {
-    //TODO: Auth with Google Account
-  }
-
-  Future<void> _signInAnonymously() async {
-    //TODO: Auth Anonymously
-    try {
-      final userCredentials = await FirebaseAuth.instance.signInAnonymously();
-      print('${userCredentials.user.uid}');
-    } catch (e) {
-      print(e.toString());
-    }
   }
 }

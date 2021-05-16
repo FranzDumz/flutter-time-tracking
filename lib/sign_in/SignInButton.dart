@@ -12,11 +12,11 @@ class SignInButton extends CustomRaisedButton {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(padding: const EdgeInsets.all(8.0),child: Image.asset(imagepath)),
-              Text(text,
-                  style: TextStyle(color: textColor, fontSize: 15.0)),
-              Opacity(
-                  opacity: 0.0, child: Image.asset(imagepath)),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(imagepath)),
+              Text(text, style: TextStyle(color: textColor, fontSize: 15.0)),
+              Opacity(opacity: 0.0, child: Image.asset(imagepath)),
             ],
           ),
           color: color,
