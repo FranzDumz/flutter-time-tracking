@@ -16,3 +16,4 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: Colors.brown), home: LandingPage(auth: Auth(),));
   }
 }
+  
