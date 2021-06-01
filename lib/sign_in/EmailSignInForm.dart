@@ -6,10 +6,11 @@ import 'package:udemy_app/common_widgets/FormSubmitButton.dart';
 import 'package:udemy_app/common_widgets/ShowAlertDialog.dart';
 import 'package:udemy_app/common_widgets/ShowExceptionAlertDialog.dart';
 import 'package:udemy_app/services/Auth.dart';
+import 'package:udemy_app/sign_in/EmailSignInModel.dart';
 
 import 'package:udemy_app/sign_in/validators.dart';
 
-enum EmailSignInFormType { signIn, register }
+
 
 class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators {
 
