@@ -25,6 +25,4 @@ class EmailSignIn extends StatelessWidget {
   }
 }
 
-Widget _buildContent(BuildContext context) {
-  return Container();
-}
+

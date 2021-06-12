@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 
 import 'ShowAlertDialog.dart';
 
-Future<void> ShowExceptionAlertDialog(
+Future<void> showExceptionAlertDialog(
   BuildContext context, {
   @required String title,
   @required Exception exception,
 }) =>
-    ShowAlertDialog(context,
+    showAlertDialog(context,
         title: title, content: _message(exception), defaultActionText: 'OK');
 
 String _message(Exception exception) {

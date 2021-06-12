@@ -10,31 +10,36 @@ import 'package:udemy_app/sign_in/SignInButton.dart';
 
 class SignInUI extends StatelessWidget {
   final SignInBloc bloc;
-  const SignInUI({Key key, @required this.bloc}) : super(key: key);
+
+  const SignInUI({Key key, @required this.bloc, @required this.isLoading}) : super(key: key);
+
+  final bool isLoading;
 
   static Widget create(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
-    return Provider<SignInBloc>(
-      create: (_) => SignInBloc(auth: auth),
-      dispose: (_, bloc) => bloc.dispose(),
-      child: Consumer<SignInBloc>(
-        builder: (_, bloc, __) => SignInUI(bloc: bloc),
+    return ChangeNotifierProvider<ValueNotifier<bool>>(
+      create: (_) => ValueNotifier<bool>(false),
+      child: Consumer<ValueNotifier<bool>>(
+        builder: (_, isLoading, __) => Provider<SignInBloc>(
+          create: (_) => SignInBloc(auth: auth,isLoading: isLoading),
+          child: Consumer<SignInBloc>(
+            builder: (_, bloc, __) => SignInUI(bloc: bloc,isLoading: isLoading.value),
+          ),
+        ),
       ),
     );
   }
-
 
   void _showSignInError(BuildContext context, Exception exception) {
     if (exception is FirebaseException &&
         exception.code == 'Error_aborted_by_user') {
       return;
     }
-    ShowExceptionAlertDialog(context,
+    showExceptionAlertDialog(context,
         title: 'Sign in Failed', exception: exception);
   }
 
   Future<void> _signInAnonymously(BuildContext context) async {
-
     //TODO: Auth Anonymously
     try {
       await bloc.signInAnonymously();
@@ -44,7 +49,6 @@ class SignInUI extends StatelessWidget {
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
-
     //TODO: Auth with Google Account
     try {
       await bloc.signInWithGoogle();
@@ -54,7 +58,6 @@ class SignInUI extends StatelessWidget {
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
-
     //TODO: Auth with Email
     try {
       await bloc.signInWithFacebook();
@@ -77,16 +80,10 @@ class SignInUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: StreamBuilder<bool>(
-          stream: bloc.isLoadingStream,
-          initialData: false,
-          builder: (context, snapshot) {
-            return _buildContentSignInUI(context, snapshot.data);
-          }),
-    );
+      body:  _buildContentSignInUI(context));
   }
 
-  Widget _buildContentSignInUI(BuildContext context, bool isLoading) {
+  Widget _buildContentSignInUI(BuildContext context) {
     return Container(
       child: SafeArea(
         child: Padding(
@@ -101,7 +98,7 @@ class SignInUI extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildHeader(isLoading),
+                    _buildHeader(),
                     SizedBox(height: 8.0),
                     Text(
                       'Keep record of your time',
@@ -163,7 +160,7 @@ class SignInUI extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(bool isLoading) {
+  Widget _buildHeader() {
     if (isLoading) {
       return Center(
         child: CircularProgressIndicator(),

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:udemy_app/common_widgets/FormSubmitButton.dart';
-import 'package:udemy_app/common_widgets/ShowAlertDialog.dart';
+
 import 'package:udemy_app/common_widgets/ShowExceptionAlertDialog.dart';
 import 'package:udemy_app/services/Auth.dart';
 import 'package:udemy_app/sign_in/EmailSignInBloc.dart';
 import 'package:udemy_app/sign_in/EmailSignInModel.dart';
 
-import 'package:udemy_app/sign_in/validators.dart';
+
 
 class EmailSignInFormBlocBased extends StatefulWidget {
   EmailSignInFormBlocBased({@required this.bloc});
@@ -53,7 +53,7 @@ class _EmailSignInFormState extends State<EmailSignInFormBlocBased> {
     } on FirebaseAuthException catch (e) {
       print(e.toString());
 
-      ShowExceptionAlertDialog(context, title: 'Sign in Failed', exception: e);
+      showExceptionAlertDialog(context, title: 'Sign in Failed', exception: e);
     }
   }
 

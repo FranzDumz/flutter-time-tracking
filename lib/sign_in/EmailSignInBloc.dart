@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:udemy_app/services/Auth.dart';
 import 'package:udemy_app/sign_in/EmailSignInModel.dart';
 

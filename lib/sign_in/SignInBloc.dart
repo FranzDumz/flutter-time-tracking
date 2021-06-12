@@ -5,26 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:udemy_app/services/Auth.dart';
 
 class SignInBloc {
-  SignInBloc({@required this.auth});
+  SignInBloc({@required this.auth, @required this.isLoading});
+  final ValueNotifier<bool> isLoading;
 
   final AuthBase auth;
 
-  final StreamController<bool> _isLoadingController = StreamController<bool>();
-
-  Stream<bool> get isLoadingStream => _isLoadingController.stream;
-
-  void dispose() {
-    _isLoadingController.close();
-  }
-
-  void _setIsLoading(bool isLoading) => _isLoadingController.add(isLoading);
 
   Future<User> _signIn(Future<User> Function() signInMethod ) async{
     try {
-      _setIsLoading(true);
+      isLoading.value = true;
       return await signInMethod();
     } catch (e) {
-      _setIsLoading(false);
+      isLoading.value = false;
       rethrow;
     }
   }

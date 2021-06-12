@@ -32,6 +32,7 @@ class Auth implements AuthBase {
   User get currentUser => _firebaseAuth.currentUser;
 
   @override
+  // ignore: missing_return
   Future<User> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final googleUser = await googleSignIn.signIn();

@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:udemy_app/home_page/HomePage.dart';
+import 'package:udemy_app/home_page/JobsPage.dart';
 import 'package:udemy_app/services/Auth.dart';
+import 'package:udemy_app/services/Database.dart';
 
 import 'package:udemy_app/sign_in/SignInUI.dart';
 
@@ -18,7 +19,9 @@ class LandingPage extends StatelessWidget {
             if (user == null) {
               return SignInUI.create(context);
             } else {
-              return HomePage();
+              return Provider<Database>(
+                  create: (_) => FirestroreDatabase(uid: user.uid),
+                  child: JobsPage());
             }
           }
           return Scaffold(

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<bool> ShowAlertDialog(
+Future<bool> showAlertDialog(
   BuildContext context, {
   @required String title,
   @required String content,
