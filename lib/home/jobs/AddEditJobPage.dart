@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:udemy_app/common_widgets/ShowAlertDialog.dart';
 import 'package:udemy_app/common_widgets/ShowExceptionAlertDialog.dart';
 import 'package:udemy_app/home/models/Job.dart';
-import 'package:udemy_app/services/Database.dart';
+import 'package:udemy_app/services/database.dart';
+
 
 //TODO Tweak Form
 class AddEditJobPage extends StatefulWidget {
@@ -13,9 +14,8 @@ class AddEditJobPage extends StatefulWidget {
   final Database database;
   final Job job;
 
-  static Future<void> show(BuildContext context, {Job job}) async {
-    final database = Provider.of<Database>(context, listen: false);
-    await Navigator.of(context).push(MaterialPageRoute(
+  static Future<void> show(BuildContext context, {Database database,Job job}) async {
+    await Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
         builder: (context) => AddEditJobPage(
               database: database,
               job: job,
@@ -54,7 +54,7 @@ class _AddEditJobPageState extends State<AddEditJobPage> {
   Future<void> _submit() async {
     if (_validateAndSaveForm()) {
       try {
-        final jobs = await widget.database.JobsStream().first;
+        final jobs = await widget.database.jobsStream().first;
         final allNames = jobs.map((job) => job.name).toList();
         if(widget.job !=null){
           allNames.remove(widget.job.name);
@@ -67,7 +67,7 @@ class _AddEditJobPageState extends State<AddEditJobPage> {
         } else {
           final id = widget.job?.id ?? documentIdFromCurrentDate();
           final job = Job(id: id, name: _name, ratePerHour: _ratePerHour);
-          await widget.database.SetJob(job);
+          await widget.database.setJob(job);
           Navigator.of(context).pop();
         }
       } on FirebaseException catch (e) {
