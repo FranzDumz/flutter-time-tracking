@@ -5,15 +5,16 @@ class CustomRaisedButton extends StatelessWidget {
   final Color color;
   final double borderRadius;
   final VoidCallback onPressed;
+  final double height;
 
   CustomRaisedButton(
-      {this.child, this.color, this.borderRadius, this.onPressed});
+      {this.child, this.color, this.borderRadius:2.0, this.onPressed, this.height:50.0});
 
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return SizedBox(
-      height: 50,
+      height: height,
       width: double.infinity,
       child: RaisedButton(
         child: child,
