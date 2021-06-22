@@ -14,6 +14,8 @@ class SignInUI extends StatelessWidget {
   const SignInUI({Key key, @required this.bloc, @required this.isLoading}) : super(key: key);
 
   final bool isLoading;
+  static const Key emailPasswordKey = Key('email-password');
+
 
   static Widget create(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
@@ -127,6 +129,7 @@ class SignInUI extends StatelessWidget {
                     ),
                     SizedBox(height: 8.0),
                     SignInButton(
+                      key: emailPasswordKey,
                       imagepath: 'images/email.png',
                       text: 'Sign in with Email',
                       color: Colors.brown[400],

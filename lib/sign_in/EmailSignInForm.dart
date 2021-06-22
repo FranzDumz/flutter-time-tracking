@@ -15,6 +15,10 @@ import 'package:udemy_app/sign_in/validators.dart';
 class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators {
 
 
+
+  EmailSignInForm({Key key, this.onSignedIn}) : super(key: key);
+
+  final VoidCallback onSignedIn;
   @override
   _EmailSignInFormState createState() => _EmailSignInFormState();
 }
@@ -56,7 +60,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       } else {
         await auth.createUserWithEmailAndPassword(_email, _password);
       }
-      Navigator.of(context).pop();
+      if(widget.onSignedIn!=null){
+        widget.onSignedIn();
+      }
     }on FirebaseAuthException catch (e) {
       print(e.toString());
 

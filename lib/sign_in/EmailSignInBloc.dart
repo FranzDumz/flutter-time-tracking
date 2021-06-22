@@ -1,7 +1,7 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'package:udemy_app/services/Auth.dart';
 import 'package:udemy_app/sign_in/EmailSignInModel.dart';
@@ -10,14 +10,16 @@ class EmailSignInBloc {
   EmailSignInBloc({@required this.auth});
 
   final AuthBase auth;
-  final StreamController<EmailSignInModel> _modelController =
-      StreamController<EmailSignInModel>();
 
-  Stream<EmailSignInModel> get modelStream => _modelController.stream;
-  EmailSignInModel _model = EmailSignInModel();
+  final _modelSubject =
+      BehaviorSubject<EmailSignInModel>.seeded(EmailSignInModel());
+
+  Stream<EmailSignInModel> get modelStream => _modelSubject.stream;
+
+  EmailSignInModel get _model => _modelSubject.value;
 
   void dispose() {
-    _modelController.close();
+    _modelSubject.close();
   }
 
   Future<void> submit() async {
@@ -39,11 +41,11 @@ class EmailSignInBloc {
 
   void updatePassword(String password) => updateWith(password: password);
 
-  void toggleFormType(){
-    final formType =  _model.formType == EmailSignInFormType.signIn
+  void toggleFormType() {
+    final formType = _model.formType == EmailSignInFormType.signIn
         ? EmailSignInFormType.register
         : EmailSignInFormType.signIn;
-   updateWith(
+    updateWith(
       email: '',
       password: '',
       formType: formType,
@@ -60,12 +62,11 @@ class EmailSignInBloc {
       bool submitted}) {
     //update model
     //add update model to _modelController
-    _model = _model.copyWtih(
+    _modelSubject.value = _model.copyWtih(
         email: email,
         password: password,
         formType: formType,
         isLoading: isLoading,
         submitted: submitted);
-    _modelController.add(_model);
   }
 }

@@ -3,12 +3,15 @@ import 'package:udemy_app/common_widgets/CustomRaisedButton.dart';
 
 class SignInButton extends CustomRaisedButton {
   SignInButton({
+    Key key,
     @required String imagepath,
     String text,
     Color color,
     Color textColor,
     VoidCallback onPressed,
-  }) : super(
+  }) :assert(text!=null),
+        super(
+         key:key,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

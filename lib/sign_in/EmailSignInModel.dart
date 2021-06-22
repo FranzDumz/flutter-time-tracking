@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:udemy_app/sign_in/validators.dart';
 
 enum EmailSignInFormType { signIn, register }
@@ -39,10 +40,8 @@ class EmailSignInModel with EmailAndPasswordValidators {
     return showErrorText ? invalidPasswordErrorText : null;
   }
 
-
-  String get emailErrorText{
-    bool showErrorText =
-        submitted && !emailValidator.isValid(email);
+  String get emailErrorText {
+    bool showErrorText = submitted && !emailValidator.isValid(email);
     return showErrorText ? invalidEmailErrorText : null;
   }
 
@@ -60,4 +59,25 @@ class EmailSignInModel with EmailAndPasswordValidators {
         isLoading: isLoading ?? this.isLoading,
         submitted: submitted ?? this.submitted);
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode =>
+      hashValues(email, password, formType, isLoading, submitted);
+
+  @override
+  bool operator ==(other) {
+    if (identical(this, other)) return true;
+    if (runtimeType != other.runtimeType) return false;
+    final EmailSignInModel otherModel = other;
+    return email == otherModel.email &&
+        password == otherModel.password &&
+        formType == otherModel.formType &&
+        isLoading == otherModel.isLoading &&
+        submitted == otherModel.submitted;
+  }
+
+  @override
+  String toString() =>
+      'email: $email, password: $password, formType: $formType, isLoading: $isLoading, submitted: $submitted';
 }

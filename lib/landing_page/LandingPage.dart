@@ -12,6 +12,11 @@ import 'package:udemy_app/services/database.dart';
 import 'package:udemy_app/sign_in/SignInUI.dart';
 
 class LandingPage extends StatelessWidget {
+  const LandingPage({Key key,@required this.databaseBuilder}) : super(key: key);
+  final Database Function(String) databaseBuilder;
+
+
+
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
@@ -24,7 +29,7 @@ class LandingPage extends StatelessWidget {
               return SignInUI.create(context);
             } else {
               return Provider<Database>(
-                  create: (_) => FirestoreDatabase(uid: user.uid),
+                  create: (_) => databaseBuilder(user.uid),
                   child: HomePage());
             }
           }
